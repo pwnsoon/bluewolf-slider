@@ -1,0 +1,19 @@
+{
+  "name": "bluewolf-slider",
+  "version": "0.0.1",
+  "description": "Bluewolf vanilla JS slider",
+  "main": "bluewolf-slider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pwnsoon/bluewolf-slider.git"
+  },
+  "author": "Sławomir Jopek <sjopek86@gmail.com> (http://bluewolf.pl)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pwnsoon/bluewolf-slider/issues"
+  },
+  "homepage": "https://github.com/pwnsoon/bluewolf-slider#readme"
+}
