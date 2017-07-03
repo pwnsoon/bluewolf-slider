@@ -1,21 +1,46 @@
-(function() {
+(function(d, w) {
     'use strict';
 
     var defaults = {
-        // default options
+        speed: 2000
     };
 
-    var BwSlider = function(container, options) {
-        if (!(this instanceof BwSlider)) return new BwSlider(container, options);
+    var bwSlider = function(container, options) {
+        if (!container) {
+            throw new Error('Missing slider container selector')
+        }
 
-        // @TODO check if container is typeof HTMLElement
-        // @TODO set settings (merge options & defaults)
+        var $slider = d.querySelector(container);
+
+        if ($slider === null) {
+            throw new TypeError('Invalid container')
+        }
+
+        if (!(this instanceof bwSlider)) return new bwSlider(container, options);
+
+        this.$slider = {};
+        this.$slider.container = $slider;
+
+        this.setOptions(options)
     };
 
-    // @TODO add methods
-    BwSlider.prototype.buildSlider = function() {};
+    bwSlider.prototype.setOptions = function(options) {
+        if (typeof options !== 'object' && options !== null) {
+            return this.options = defaults
+        }
 
-    BwSlider.prototype.buildControls = function() {};
+        Object.keys(defaults).forEach(function(k) {
+            options[k] = defaults[k]
+        });
 
-    BwSlider.prototype.moveTo = function() {};
-}());
+        this.options = options
+    };
+
+    bwSlider.prototype.buildSlider = function() {};
+
+    bwSlider.prototype.buildControls = function() {};
+
+    bwSlider.prototype.moveTo = function() {};
+
+    w.bwSlider = bwSlider;
+})(document, window);
