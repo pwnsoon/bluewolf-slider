@@ -1,6 +1,14 @@
 (function(d, w) {
     'use strict';
 
+    var CONST = {
+        innerWrapperClass: 'bw-inner-wrapper',
+        slideClass: 'bw-slide-item',
+        arrowClass: 'bw-arrow',
+        arrowLeftClass: 'bw-arrow-left',
+        arrowRightClass: 'bw-arrow-right'
+    };
+
     var defaults = {
         speed: 2000
     };
@@ -21,7 +29,10 @@
         this.$slider = {};
         this.$slider.container = $slider;
 
-        this.setOptions(options)
+        this.setOptions(options);
+        this.buildSlider();
+        this.buildControls();
+        attachEvents();
     };
 
     bwSlider.prototype.setOptions = function(options) {
@@ -36,11 +47,49 @@
         this.options = options
     };
 
-    bwSlider.prototype.buildSlider = function() {};
+    bwSlider.prototype.buildSlider = function() {
+        var $innerWrapper = document.createElement('div');
+        $innerWrapper.className = CONST.innerWrapperClass;
 
-    bwSlider.prototype.buildControls = function() {};
+        var length = [].slice.call(this.$slider.container.children);
+
+        length.forEach(function($slide) {
+            $slide.className = CONST.slideClass;
+            $innerWrapper.appendChild($slide);
+        });
+
+        this.$slider.container.appendChild($innerWrapper);
+    };
+
+    bwSlider.prototype.buildControls = function() {
+        var $leftArrow = document.createElement('span');
+        var $rightArrow = document.createElement('span');
+
+        this.$slider.arrows = {
+            left: $leftArrow,
+            right: $rightArrow
+        };
+
+        $leftArrow.classList.add(CONST.arrowClass, CONST.arrowLeftClass);
+        $rightArrow.classList.add(CONST.arrowClass, CONST.arrowRightClass);
+
+        this.$slider.container.appendChild($leftArrow);
+        this.$slider.container.appendChild($rightArrow);
+    };
 
     bwSlider.prototype.moveTo = function() {};
 
     w.bwSlider = bwSlider;
+
+    function attachEvents() {
+        // @TODO add events
+    }
+
+    function detachEvents() {
+        // @TODO detach events
+    }
+
+    function destroy() {
+        // @TODO delete slider instance
+    }
 })(document, window);
