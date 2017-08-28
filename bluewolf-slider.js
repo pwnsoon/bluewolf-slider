@@ -41,7 +41,7 @@
         }
 
         Object.keys(defaults).forEach(function(k) {
-            options[k] = defaults[k]
+            if (defaults[k] === undefined) options[k] = defaults[k]
         });
 
         this.options = options
