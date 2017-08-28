@@ -59,9 +59,12 @@
         });
 
         this.$slider.container.appendChild($innerWrapper);
+        this.$slider.slides = this.$slider.container.querySelectorAll('.bw-slide-item');
     };
 
     bwSlider.prototype.buildControls = function() {
+        if (this.$slider.slides.length <= 1) return;
+
         var $leftArrow = document.createElement('span');
         var $rightArrow = document.createElement('span');
 
@@ -77,7 +80,24 @@
         this.$slider.container.appendChild($rightArrow);
     };
 
-    bwSlider.prototype.moveTo = function() {};
+    bwSlider.prototype.moveTo = function(index) {};
+
+    bwSlider.prototype.prev = function() {};
+
+    bwSlider.prototype.next = function() {};
+
+    bwSlider.prototype.stop = function() {};
+
+    bwSlider.prototype.play = function() {};
+
+    bwSlider.prototype.destroy = function() {
+        if (!(this instanceof bwSlider)) return;
+
+        detachEvents();
+        this.$slider.container.remove();
+        delete this.$slider;
+        delete this.options;
+    };
 
     w.bwSlider = bwSlider;
 
@@ -88,8 +108,22 @@
     function detachEvents() {
         // @TODO detach events
     }
-
-    function destroy() {
-        // @TODO delete slider instance
-    }
 })(document, window);
+
+/* polyfill for DOM.remove() */
+(function (arr) {
+    arr.forEach(function (item) {
+        if (item.hasOwnProperty('remove')) {
+            return;
+        }
+        Object.defineProperty(item, 'remove', {
+            configurable: true,
+            enumerable: true,
+            writable: true,
+            value: function remove() {
+                this.parentNode.removeChild(this);
+            }
+        });
+    });
+})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
