@@ -28,11 +28,13 @@
 
         this.$slider = {};
         this.$slider.container = $slider;
+        this.currentIndex = 0;
+        this.slides = $slider.children.length;
 
         this.setOptions(options);
         this.buildSlider();
         this.buildControls();
-        attachEvents();
+        attachEvents.call(this);
     };
 
     bwSlider.prototype.setOptions = function(options) {
@@ -80,20 +82,42 @@
         this.$slider.container.appendChild($rightArrow);
     };
 
-    bwSlider.prototype.moveTo = function(index) {};
+    bwSlider.prototype.moveTo = function(index) {
+        if (index <= 0 || index >= this.slides) {
+            throw new Error('Invalid slide index')
+        }
 
-    bwSlider.prototype.prev = function() {};
+        this.currentIndex = index;
+    };
 
-    bwSlider.prototype.next = function() {};
+    bwSlider.prototype.prev = function() {
+        if (this.currentIndex - 1 < 0) {
+            return this.currentIndex = this.slides - 1;
+        }
 
-    bwSlider.prototype.stop = function() {};
+        this.currentIndex -= 1;
+    };
 
-    bwSlider.prototype.play = function() {};
+    bwSlider.prototype.next = function() {
+        if (this.currentIndex >= this.slides - 1) {
+            return this.currentIndex = 0;
+        }
+
+        this.currentIndex += 1;
+    };
+
+    bwSlider.prototype.stop = function() {
+        //@TODO add stop auto slide change
+    };
+
+    bwSlider.prototype.play = function() {
+        //@TODO add auto slide change
+    };
 
     bwSlider.prototype.destroy = function() {
         if (!(this instanceof bwSlider)) return;
 
-        detachEvents();
+        detachEvents.call(this);
         this.$slider.container.remove();
         delete this.$slider;
         delete this.options;
@@ -102,11 +126,13 @@
     w.bwSlider = bwSlider;
 
     function attachEvents() {
-        // @TODO add events
+        this.$slider.arrows.left.addEventListener('click', this.prev.bind(this));
+        this.$slider.arrows.right.addEventListener('click', this.next.bind(this));
     }
 
     function detachEvents() {
-        // @TODO detach events
+        this.$slider.arrows.left.removeEventListener('click', this.prev);
+        this.$slider.arrows.right.removeEventListener('click', this.next);
     }
 })(document, window);
 
