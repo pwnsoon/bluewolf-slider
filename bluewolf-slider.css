@@ -57,3 +57,7 @@
 #bwSlider .bw-arrow.bw-arrow-right:after {
     content: "\e901";
 }
+
+#bwSlider .bw-slide-item.bw-current {
+    background: red;
+}
