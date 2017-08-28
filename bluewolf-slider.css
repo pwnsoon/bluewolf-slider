@@ -68,6 +68,9 @@
 }
 
 /* DEMO */
+body {
+    font-family: 'Oswald', sans-serif;
+}
 
 #bwSlider.demo {
     margin: 50px auto;
@@ -76,7 +79,7 @@
 
 #bwSlider.demo .bw-slide-item {
     color: #fff;
-    font-size: 36px;
+    font-size: 58px;
     line-height: 200px;
     min-height: 200px;
     text-align: center;
