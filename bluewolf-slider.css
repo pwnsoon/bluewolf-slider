@@ -58,6 +58,32 @@
     content: "\e901";
 }
 
+#bwSlider .bw-slide-item {
+    display: none;
+}
+
 #bwSlider .bw-slide-item.bw-current {
-    background: red;
+    background: silver;
+    display: block;
+}
+
+/* DEMO */
+
+#bwSlider.demo {
+    margin: 50px auto;
+    max-width: 1200px;
+}
+
+#bwSlider.demo .bw-slide-item {
+    color: #fff;
+    font-size: 36px;
+    line-height: 200px;
+    min-height: 200px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#bwSlider.demo .bw-arrow:before,
+#bwSlider.demo .bw-arrow:after {
+    color: #fff;
 }
