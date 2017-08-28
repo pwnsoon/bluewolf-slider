@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'bw-slider';
+    src:  url('assets/bw-slider.eot?w4crjb');
+    src:  url('assets/bw-slider.eot?w4crjb#iefix') format('embedded-opentype'),
+    url('assets/bw-slider.ttf?w4crjb') format('truetype'),
+    url('assets/bw-slider.woff?w4crjb') format('woff'),
+    url('assets/bw-slider.svg?w4crjb#bw-slider') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#bwSlider {
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+#bwSlider .bw-arrow {
+    cursor: pointer;
+    display: inline-block;
+    padding: 7px;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+#bwSlider .bw-arrow.bw-arrow-right {
+    right: 0;
+}
+
+#bwSlider .bw-arrow:before,
+#bwSlider .bw-arrow:after {
+    display: block;
+    font-family: 'bw-slider';
+    font-size: 36px;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    speak: none;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#bwSlider .bw-arrow.bw-arrow-left:before {
+    content: "\e900";
+}
+
+#bwSlider .bw-arrow.bw-arrow-right:after {
+    content: "\e901";
+}
