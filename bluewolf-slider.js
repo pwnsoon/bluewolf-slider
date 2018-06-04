@@ -1,6 +1,7 @@
 (function(d, w) {
     'use strict';
 
+    // consts
     var CLASSNAMES = {
         INNER_WRAPPER: 'bw-inner-wrapper',
         SLIDE: 'bw-slide-item',
@@ -15,8 +16,13 @@
     }
 
     var DEFAULTS = {
-        SPEED: 2000
+        AUTO: true,
+        INTERVAL: 2000,
+        SPEED: 2000,
     };
+
+    // private vars
+    var _interval = null;
 
     var bwSlider = function(container, options) {
         if (!container) {
@@ -55,6 +61,10 @@
         this.buildSlider();
         this.buildControls();
         _attachEvents.call(this);
+
+        if (DEFAULTS.AUTO) {
+            this.play();
+        }
     };
 
     bwSlider.prototype.setOptions = function(options) {
@@ -115,6 +125,8 @@
     };
 
     bwSlider.prototype.moveTo = function(index) {
+        this.stop();
+
         if (index <= 0 || index >= this.slides) {
             throw new Error('Invalid slide index')
         }
@@ -122,7 +134,11 @@
         this.index.set(index);
     };
 
-    bwSlider.prototype.prev = function() {
+    bwSlider.prototype.prev = function(pause) {
+        if (pause) {
+            this.stop();
+        }
+
         if (this.index.get() - 1 < 0) {
             return this.index.set(this.slides - 1);
         }
@@ -130,7 +146,11 @@
         this.index.set(this.index.get() - 1);
     };
 
-    bwSlider.prototype.next = function() {
+    bwSlider.prototype.next = function(pause) {
+        if (pause) {
+            this.stop();
+        }
+
         if (this.index.get() >= this.slides - 1) {
             return this.index.set(0)
         }
@@ -139,11 +159,15 @@
     };
 
     bwSlider.prototype.stop = function() {
-        //@TODO add stop auto slide change
+        if (_interval) {
+            clearInterval(_interval);
+        }
     };
 
     bwSlider.prototype.play = function() {
-        //@TODO add auto slide change
+        if (!_interval) {
+            _interval = setInterval(this.next.bind(this), DEFAULTS.INTERVAL);
+        }
     };
 
     bwSlider.prototype.destroy = function() {
@@ -178,8 +202,8 @@
     }
 
     function _attachEvents() {
-        this.$slider.arrows.left.addEventListener(EVENTS.CLICK, this.prev.bind(this));
-        this.$slider.arrows.right.addEventListener(EVENTS.CLICK, this.next.bind(this));
+        this.$slider.arrows.left.addEventListener(EVENTS.CLICK, this.prev.bind(this, true));
+        this.$slider.arrows.right.addEventListener(EVENTS.CLICK, this.next.bind(this, true));
     }
 
     function _detachEvents() {
