@@ -1,0 +1,54 @@
+#slider-nav {
+  text-align: center;
+}
+
+#slider-nav .button {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background: silver;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#slider-nav .button:hover {
+  background: #000;
+}
+
+#slider-nav .button::before,
+#slider-nav .button::after {
+  display: block;
+  content: "";
+}
+
+#slider-play::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 15px;
+  border-color: transparent transparent transparent #fff;
+  transform: translate(-50%, -50%);
+}
+
+#slider-pause::before,
+#slider-pause::after {
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 20px;
+  background: #fff;
+  transform: translateY(-50%);
+}
+
+#slider-pause::before {
+  left: 32%;
+}
+
+#slider-pause::after {
+  right: 32%;
+}

@@ -11,6 +11,11 @@
         CURRENT: 'bw-current'
     };
 
+    var DIRECTIONS = {
+        PREV: 'prev',
+        NEXT: 'next'
+    }
+
     var EVENTS = {
         CLICK: 'click'
     }
@@ -125,7 +130,7 @@
     };
 
     bwSlider.prototype.moveTo = function(index) {
-        this.stop();
+        this.pause();
 
         if (index <= 0 || index >= this.slides) {
             throw new Error('Invalid slide index')
@@ -136,7 +141,7 @@
 
     bwSlider.prototype.prev = function(pause) {
         if (pause) {
-            this.stop();
+            this.pause();
         }
 
         if (this.index.get() - 1 < 0) {
@@ -148,7 +153,7 @@
 
     bwSlider.prototype.next = function(pause) {
         if (pause) {
-            this.stop();
+            this.pause();
         }
 
         if (this.index.get() >= this.slides - 1) {
@@ -158,9 +163,9 @@
         this.index.set(this.index.get() + 1);
     };
 
-    bwSlider.prototype.stop = function() {
+    bwSlider.prototype.pause = function() {
         if (_interval) {
-            clearInterval(_interval);
+            _interval = clearInterval(_interval);
         }
     };
 
