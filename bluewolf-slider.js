@@ -41,7 +41,7 @@
             set: function(index) {
                 this.prev = this.current;
                 this.current = index;
-                animation.call(self);
+                _animation.call(self);
             },
             get: function() {
                 return this.current
@@ -54,7 +54,7 @@
         this.setOptions(options);
         this.buildSlider();
         this.buildControls();
-        attachEvents.call(this);
+        _attachEvents.call(this);
     };
 
     bwSlider.prototype.setOptions = function(options) {
@@ -149,7 +149,7 @@
     bwSlider.prototype.destroy = function() {
         if (!(this instanceof bwSlider)) return;
 
-        detachEvents.call(this);
+        _detachEvents.call(this);
         this.$slider.container.remove();
         delete this.$slider;
         delete this.options;
@@ -157,31 +157,32 @@
 
     w.bwSlider = bwSlider;
 
-    function animation() {
+    // private methods
+    function _animation() {
         var classList = [CLASSNAMES.CURRENT];
 
-        removeClass(classList, this.$slider.slides[this.index.getPrev()]);
-        addClass(classList, this.$slider.slides[this.index.get()]);
+        _removeClass(classList, this.$slider.slides[this.index.getPrev()]);
+        _addClass(classList, this.$slider.slides[this.index.get()]);
     }
 
-    function addClass(classList, $element) {
+    function _addClass(classList, $element) {
         classList.forEach(function(className) {
             $element.classList.add(className)
         })
     }
 
-    function removeClass(classList, $element) {
+    function _removeClass(classList, $element) {
         classList.forEach(function(className) {
             $element.classList.remove(className)
         })
     }
 
-    function attachEvents() {
+    function _attachEvents() {
         this.$slider.arrows.left.addEventListener(EVENTS.CLICK, this.prev.bind(this));
         this.$slider.arrows.right.addEventListener(EVENTS.CLICK, this.next.bind(this));
     }
 
-    function detachEvents() {
+    function _detachEvents() {
         this.$slider.arrows.left.removeEventListener(EVENTS.CLICK, this.prev);
         this.$slider.arrows.right.removeEventListener(EVENTS.CLICK, this.next);
     }
