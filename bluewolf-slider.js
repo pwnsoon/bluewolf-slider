@@ -1,18 +1,21 @@
 (function(d, w) {
     'use strict';
 
-    var CONST = {
-        innerWrapperClass: 'bw-inner-wrapper',
-        slideClass: 'bw-slide-item',
-        arrowClass: 'bw-arrow',
-        arrowLeftClass: 'bw-arrow-left',
-        arrowRightClass: 'bw-arrow-right',
-        currentClass: 'bw-current'
+    var CLASSNAMES = {
+        INNER_WRAPPER: 'bw-inner-wrapper',
+        SLIDE: 'bw-slide-item',
+        ARROW: 'bw-arrow',
+        ARROW_LEFT: 'bw-arrow-left',
+        ARROW_RIGHT: 'bw-arrow-right',
+        CURRENT: 'bw-current'
     };
 
-    var defaults = {
-        speed: 2000,
-        animationClass: 'animate-1'
+    var EVENTS = {
+        CLICK: 'click'
+    }
+
+    var DEFAULTS = {
+        SPEED: 2000
     };
 
     var bwSlider = function(container, options) {
@@ -56,11 +59,11 @@
 
     bwSlider.prototype.setOptions = function(options) {
         if (typeof options !== 'object' && options !== null) {
-            return this.options = defaults
+            return this.options = DEFAULTS
         }
 
-        Object.keys(defaults).forEach(function(k) {
-            if (defaults[k] === undefined) options[k] = defaults[k]
+        Object.keys(DEFAULTS).forEach(function(k) {
+            if (DEFAULTS[k] === undefined) options[k] = DEFAULTS[k]
         });
 
         this.options = options
@@ -68,14 +71,14 @@
 
     bwSlider.prototype.buildSlider = function() {
         var $innerWrapper = document.createElement('div');
-        $innerWrapper.className = CONST.innerWrapperClass;
+        $innerWrapper.className = CLASSNAMES.INNER_WRAPPER;
 
         var length = [].slice.call(this.$slider.container.children);
         var process = function($slide, index) {
-            $slide.className = CONST.slideClass;
+            $slide.className = CLASSNAMES.SLIDE;
 
             if (index === this.index.get()) {
-                $slide.className += ' ' + CONST.currentClass;
+                $slide.className += ' ' + CLASSNAMES.CURRENT;
             }
 
             $innerWrapper.appendChild($slide);
@@ -98,8 +101,14 @@
             right: $rightArrow
         };
 
-        $leftArrow.classList.add(CONST.arrowClass, CONST.arrowLeftClass);
-        $rightArrow.classList.add(CONST.arrowClass, CONST.arrowRightClass);
+        $leftArrow.classList.add(
+            CLASSNAMES.ARROW,
+            CLASSNAMES.ARROW_LEFT
+        );
+        $rightArrow.classList.add(
+            CLASSNAMES.ARROW,
+            CLASSNAMES.ARROW_RIGHT
+        );
 
         this.$slider.container.appendChild($leftArrow);
         this.$slider.container.appendChild($rightArrow);
@@ -149,7 +158,7 @@
     w.bwSlider = bwSlider;
 
     function animation() {
-        var classList = [this.options.animationClass, CONST.currentClass];
+        var classList = [CLASSNAMES.CURRENT];
 
         removeClass(classList, this.$slider.slides[this.index.getPrev()]);
         addClass(classList, this.$slider.slides[this.index.get()]);
@@ -168,13 +177,13 @@
     }
 
     function attachEvents() {
-        this.$slider.arrows.left.addEventListener('click', this.prev.bind(this));
-        this.$slider.arrows.right.addEventListener('click', this.next.bind(this));
+        this.$slider.arrows.left.addEventListener(EVENTS.CLICK, this.prev.bind(this));
+        this.$slider.arrows.right.addEventListener(EVENTS.CLICK, this.next.bind(this));
     }
 
     function detachEvents() {
-        this.$slider.arrows.left.removeEventListener('click', this.prev);
-        this.$slider.arrows.right.removeEventListener('click', this.next);
+        this.$slider.arrows.left.removeEventListener(EVENTS.CLICK, this.prev);
+        this.$slider.arrows.right.removeEventListener(EVENTS.CLICK, this.next);
     }
 })(document, window);
 
